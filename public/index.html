@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#15231f" />
+    <title>My MTG Collection</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/pagination.css" />
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="My MTG Collection home"><span class="brand-mark">✦</span><span>MY COLLECTION</span></a>
+      <span class="private-badge"><span class="status-dot"></span> Private · local database</span>
+    </header>
+
+    <main class="layout">
+      <section class="intro">
+        <div class="eyebrow">THE ARCHIVE</div>
+        <h1>Your cards,<br /><em>accounted for.</em></h1>
+        <p>A quiet home for every card in your collection. Add a favorite or bring in your inventory all at once.</p>
+      </section>
+
+      <section class="summary" aria-label="Collection summary">
+        <div class="summary-label">COLLECTION AT A GLANCE</div>
+        <div class="summary-items">
+          <div><strong id="unique-count">—</strong><span>unique entries</span></div>
+          <div class="summary-rule"></div>
+          <div><strong id="copy-count">—</strong><span>total cards</span></div>
+        </div>
+      </section>
+
+      <section class="entry-grid" aria-label="Card entry workflows">
+        <article class="panel single-panel">
+          <div class="panel-heading">
+            <div class="panel-icon">＋</div>
+            <div><div class="eyebrow">ONE AT A TIME</div><h2>Add a card</h2></div>
+          </div>
+          <form id="single-form" novalidate>
+            <div class="form-grid">
+              <label class="wide">Card name <input name="name" placeholder="e.g. Sol Ring" required maxlength="200" /></label>
+              <label>Set code <input name="setCode" placeholder="e.g. CMM" required maxlength="12" /></label>
+              <label>Set name <input name="setName" placeholder="Commander Masters" required maxlength="200" /></label>
+              <label>Collector number <input name="collectorNumber" placeholder="396" required maxlength="32" /></label>
+              <label>Finish <select name="finish" required><option value="nonfoil">Nonfoil</option><option value="foil">Foil</option><option value="etched">Etched</option></select></label>
+              <label>Condition <select name="condition" required><option value="NM">Near Mint (NM)</option><option value="LP">Lightly Played (LP)</option><option value="MP">Moderately Played (MP)</option><option value="HP">Heavily Played (HP)</option><option value="DMG">Damaged (DMG)</option></select></label>
+              <label>Quantity <input name="quantity" type="number" min="1" max="100000" value="1" required /></label>
+              <label class="wide">Scryfall card ID <input name="scryfallId" placeholder="UUID from the Scryfall card page" required /></label>
+            </div>
+            <div class="form-foot"><span class="hint">All fields are required.</span><button class="button primary" type="submit">Save card <span aria-hidden="true">↗</span></button></div>
+            <div class="notice" id="single-notice" role="status" aria-live="polite"></div>
+          </form>
+        </article>
+
+        <article class="panel bulk-panel">
+          <div class="panel-heading">
+            <div class="panel-icon bulk-icon">⇧</div>
+            <div><div class="eyebrow">ALL AT ONCE</div><h2>Bring in your list</h2></div>
+          </div>
+          <p class="panel-copy">Import up to 5,000 cards from a CSV. We validate every row first, so a mistake never leaves you with a partial import.</p>
+          <a class="template-link" href="/api/template.csv" download>↓ Download the CSV template</a>
+          <form id="bulk-form">
+            <label class="upload-zone" for="csv-file"><span class="upload-symbol">↑</span><strong id="file-label">Choose a CSV file</strong><span>or drop it here · up to 5,000 rows</span><input id="csv-file" type="file" accept=".csv,text/csv" /></label>
+            <button class="button secondary" type="submit">Validate &amp; import</button>
+            <div class="notice" id="bulk-notice" role="status" aria-live="polite"></div>
+          </form>
+          <div class="duplicate-note"><span>↻</span><span>Matching copies are grouped by Scryfall ID, finish, and condition. Quantities are added together.</span></div>
+        </article>
+      </section>
+
+      <section class="collection-section">
+        <div class="collection-heading"><div><div class="eyebrow">YOUR INVENTORY</div><h2>The collection</h2></div><label class="search-box"><span>⌕</span><input id="search" type="search" placeholder="Search cards or sets" aria-label="Search collection" /></label></div>
+        <div class="table-wrap"><table><thead><tr><th>CARD</th><th>SET</th><th>NO.</th><th>FINISH</th><th>CONDITION</th><th>QTY</th></tr></thead><tbody id="cards-body"><tr><td class="empty" colspan="6">Loading your collection…</td></tr></tbody></table></div>
+        <div class="table-foot"><span id="table-count">—</span><span>Stored on this device</span></div>
+        <button class="button secondary load-more" id="load-more" type="button" hidden>Load more cards</button>
+      </section>
+      <footer>Built for the cards you keep. <span>MTG COLLECTION DATABASE</span></footer>
+    </main>
+  </body>
+</html>
